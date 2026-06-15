@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "node": "^26.3.0",
+    "server.js": "^1.0.0"
+  }
+}
