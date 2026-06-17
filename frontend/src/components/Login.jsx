@@ -5,7 +5,7 @@ export default function Login({ setIsLoggedIn }) {
   const [activeTab, setActiveTab] = useState("login");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
-
+  
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -25,12 +25,27 @@ export default function Login({ setIsLoggedIn }) {
 
       const data = response.data;
 
-      setMessage("✅ Login Successful");
+if (response.data.message === "Login Success") {
+  // Session expires after 30 minutes
+  //const expiryTime = Date.now() + 30 * 60 * 1000;
+  const expiryTime = Date.now() + 30 * 1000;
 
-      if (setIsLoggedIn) {
-        setIsLoggedIn(true);
-      }
 
+  // Save session data
+  sessionStorage.setItem("isLoggedIn", "true");
+  sessionStorage.setItem("loginExpiry", expiryTime.toString());
+
+  // Save role returned from login
+  sessionStorage.setItem("userRole", role);
+
+  // Update React state
+  setIsLoggedIn(true);
+
+  // Show success message
+  setMessage(`✅ Login Successful! Logged in as ${role}`);
+} else {
+  setMessage("❌ Login Failed");
+}
       setTimeout(() => {
         switch (data.role) {
           case "ADMIN":

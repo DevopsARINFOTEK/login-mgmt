@@ -63,7 +63,9 @@ app.post("/login", async (req, res) => {
                 message: "Login Success"
             });
 
-            function loginUser(){
+
+
+    function loginUser(){
 
     let regid = document.getElementById("regid").value;
     let password = document.getElementById("password").value;
