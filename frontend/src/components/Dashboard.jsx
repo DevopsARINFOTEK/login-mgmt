@@ -16,7 +16,7 @@ export default function Dashboard() {
 
         <p className="text-lg text-slate-600 mb-6">
           Welcome to <span className="font-bold text-orange-500">AR INFOTEK</span>.
-          You have successfully signed in.
+          You have successfully signed in as <span className="font-bold">{sessionStorage.getItem("userRole")}</span>.
         </p>
 
         {/* Info Card */}

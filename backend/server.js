@@ -50,7 +50,7 @@ app.post("/login", async (req, res) => {
 
     try {
 
-        const { username, password } = req.body;
+        const { username, password, role } = req.body;
 
         const result = await pool.query(
             "SELECT * FROM login WHERE username = $1 AND password = $2",
@@ -60,7 +60,9 @@ app.post("/login", async (req, res) => {
         if (result.rows.length > 0) {
 
             res.json({
-                message: "Login Success"
+                success: true,
+                message: "Login Success",
+                role: result.rows[0].role
             });
 
 

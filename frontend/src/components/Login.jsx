@@ -9,7 +9,12 @@ export default function Login({ setIsLoggedIn }) {
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
+    role: ""
   });
+
+
+
+
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -18,18 +23,32 @@ export default function Login({ setIsLoggedIn }) {
       const response = await axios.post(
         "http://localhost:5000/login",
         {
-          ...loginData,
-          role,
+          username: loginData.username,
+          password: loginData.password,
+          role: loginData.role
         }
       );
 
       const data = response.data;
 
-if (response.data.message === "Login Success") {
-  // Session expires after 30 minutes
+      console.log("Login Response:", data.message);
+      // Session expires after 30 minutes
+  if (data.message === "Login Success") {
   //const expiryTime = Date.now() + 30 * 60 * 1000;
   const expiryTime = Date.now() + 30 * 1000;
 
+      sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("loginExpiry", expiryTime.toString());
+      sessionStorage.setItem("userRole", data.role);
+
+  setIsLoggedIn(true);
+
+  setMessage(
+    `✅ Login Successful! Logged in as ${data.role}`
+  );
+} else {
+  setMessage("❌ Invalid Username or Password");
+}
 
   // Save session data
   sessionStorage.setItem("isLoggedIn", "true");
@@ -43,10 +62,11 @@ if (response.data.message === "Login Success") {
 
   // Show success message
   setMessage(`✅ Login Successful! Logged in as ${role}`);
-} else {
+} catch {
   setMessage("❌ Login Failed");
 }
-      setTimeout(() => {
+try{      
+setTimeout(() => {
         switch (data.role) {
           case "ADMIN":
             window.location.href = "/admin-dashboard";
@@ -59,6 +79,12 @@ if (response.data.message === "Login Success") {
             break;
           case "INTERN":
             window.location.href = "/intern-dashboard";
+            break;
+          case "HR":
+            window.location.href = "/hr-dashboard";
+            break;
+          case "TRAINER":
+            window.location.href = "/trainer-dashboard";
             break;
           default:
             break;
@@ -126,7 +152,7 @@ if (response.data.message === "Login Success") {
                 activeTab === "signup"
                   ? "bg-blue-700 text-white"
                   : "bg-gray-100"
-              }`}
+                }`}
             >
               Sign Up
             </button>
@@ -134,7 +160,7 @@ if (response.data.message === "Login Success") {
 
           {activeTab === "login" ? (
             <form onSubmit={loginUser} className="space-y-4">
-
+     
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -145,6 +171,8 @@ if (response.data.message === "Login Success") {
                 <option value="EMPLOYEE">Employee</option>
                 <option value="STUDENT">Student</option>
                 <option value="INTERN">Intern</option>
+                <option value="HR">HR</option>
+                <option value="TRAINER">Trainer</option>
               </select>
 
               <input
