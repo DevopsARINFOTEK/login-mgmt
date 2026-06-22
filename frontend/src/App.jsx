@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/Homepage";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
