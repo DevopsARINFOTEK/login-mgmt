@@ -160,21 +160,8 @@ setTimeout(() => {
 
           {activeTab === "login" ? (
             <form onSubmit={loginUser} className="space-y-4">
+              
      
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full border rounded-xl p-3"
-              >
-                <option value="">Select Role</option>
-                <option value="ADMIN">Admin</option>
-                <option value="EMPLOYEE">Employee</option>
-                <option value="STUDENT">Student</option>
-                <option value="INTERN">Intern</option>
-                <option value="HR">HR</option>
-                <option value="TRAINER">Trainer</option>
-              </select>
-
               <input
                 type="text"
                 placeholder="Registration ID / Email"
