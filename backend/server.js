@@ -16,33 +16,33 @@ const pool = new Pool({
 });
 
 
-// Get all students with login username
-app.get("/students", async (req, res) => {
+// // Get all students with login username
+// app.get("/students", async (req, res) => {
 
-    try {
+//     try {
 
-        const result = await pool.query(`
-            SELECT
-                s.student_id,
-                s.student_name,
-                s.course,
-                l.username
-            FROM student s
-            JOIN login l
-            ON s.login_id = l.login_id
-        `);
+//         const result = await pool.query(`
+//             SELECT
+//                 s.student_id,
+//                 s.student_name,
+//                 s.course,
+//                 l.username
+//             FROM student s
+//             JOIN login l
+//             ON s.login_id = l.login_id
+//         `);
 
-        res.json(result.rows);
+//         res.json(result.rows);
 
-    } catch (error) {
+//     } catch (error) {
 
-        res.status(500).json({
-            error: error.message
-        });
+//         res.status(500).json({
+//             error: error.message
+//         });
 
-    }
+//     }
 
-});
+// });
 
 
 // Login Check
@@ -53,7 +53,7 @@ app.post("/login", async (req, res) => {
         const { username, password, role } = req.body;
 
         const result = await pool.query(
-            "SELECT * FROM login WHERE username = $1 AND password = $2",
+            "SELECT * FROM public.login WHERE username = $1 AND password = $2",
             [username, password]
         );
 
@@ -67,35 +67,7 @@ app.post("/login", async (req, res) => {
 
 
 
-    function loginUser(){
 
-    let regid = document.getElementById("regid").value;
-    let password = document.getElementById("password").value;
-    let msg = document.getElementById("loginMessage");
-
-    if(regid === "" || password === ""){
-
-        msg.innerHTML = "❌ Please enter Registration ID and Password";
-        msg.style.color = "red";
-
-        return;
-    }
-
-    msg.innerHTML = "✅ Login Successful...";
-    alert("✅ Login Successful");
-    msg.style.color = "green";
-
-    setTimeout(function(){
-
-        document.getElementById("userId").innerHTML = regid;
-
-        document.getElementById("loginPage").style.display = "none";
-
-        document.getElementById("dashboard").style.display = "block";
-
-    }, 2000);
-
-}
         } else {
 
             res.json({
