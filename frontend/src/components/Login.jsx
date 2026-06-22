@@ -21,7 +21,7 @@ export default function Login({ setIsLoggedIn }) {
 //backend connetctivity
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login",
+        "http://localhost:5000/login",
         {
           username: loginData.username,
           password: loginData.password,
