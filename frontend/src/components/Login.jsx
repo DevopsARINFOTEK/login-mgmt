@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ setIsLoggedIn }) {
   const [activeTab, setActiveTab] = useState("login");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   
   const [loginData, setLoginData] = useState({
     username: "",
@@ -13,87 +15,90 @@ export default function Login({ setIsLoggedIn }) {
   });
 
 
+  const handleContinueLearning = (role) => {
+    switch (role) {
+      case "ADMIN":
+        navigate("/admin-dashboard");
+        break;
+      case "EMPLOYEE":
+        navigate("/employee-dashboard");
+        break;
+      case "STUDENT":
+        navigate("/student-dashboard");
+        break;
+      case "INTERN":
+        navigate("/intern-dashboard");
+        break;
+      case "HR":
+        navigate("/hr-dashboard");
+        break;
+      default:
+        navigate("/");
+    }
+  };
 
-
-
-  const loginUser = async (e) => {
+  async function loginUser(e) {
     e.preventDefault();
-//backend connetctivity
+
     try {
       const response = await axios.post(
         "http://localhost:5000/login",
         {
           username: loginData.username,
           password: loginData.password,
-          role: loginData.role
+          role: loginData.role,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
         }
       );
 
       const data = response.data;
 
-      console.log("Login Response:", data.message);
-      // Session expires after 30 minutes
-  if (data.message === "Login Success") {
-  //const expiryTime = Date.now() + 30 * 60 * 1000;
-  const expiryTime = Date.now() + 30 * 1000;
+      if (data && data.message === "Login Success") {
+        // expiry (30 minutes)
+        const expiryTime = Date.now() + 30 * 60 * 1000;
 
-      sessionStorage.setItem("isLoggedIn", "true");
-      sessionStorage.setItem("loginExpiry", expiryTime.toString());
-      sessionStorage.setItem("userRole", data.role);
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("loginExpiry", expiryTime.toString());
+        sessionStorage.setItem("userRole", data.role || loginData.role);
 
-  setIsLoggedIn(true);
+        setIsLoggedIn(true);
+        setMessage(`✅ Login Successful! Logged in as ${data.role || loginData.role}`);
 
-  setMessage(
-    `✅ Login Successful! Logged in as ${data.role}`
-  );
-} else {
-  setMessage("❌ Invalid Username or Password");
-}
-
-  // Save session data
-  sessionStorage.setItem("isLoggedIn", "true");
-  sessionStorage.setItem("loginExpiry", expiryTime.toString());
-
-  // Save role returned from login
-  sessionStorage.setItem("userRole", role);
-
-  // Update React state
-  setIsLoggedIn(true);
-
-  // Show success message
-  setMessage(`✅ Login Successful! Logged in as ${role}`);
-} catch {
-  setMessage("❌ Login Failed");
-}
-try{      
-setTimeout(() => {
-        switch (data.role) {
+        // navigate based on role returned from server (fallback to loginData.role)
+        const userRole = data.role || loginData.role;
+        switch (userRole) {
           case "ADMIN":
-            window.location.href = "/admin-dashboard";
+            navigate("/admin-dashboard");
             break;
           case "EMPLOYEE":
-            window.location.href = "/employee-dashboard";
+            navigate("/employee-dashboard");
             break;
           case "STUDENT":
-            window.location.href = "/student-dashboard";
+            navigate("/student-dashboard");
             break;
           case "INTERN":
-            window.location.href = "/intern-dashboard";
+            navigate("/intern-dashboard");
             break;
           case "HR":
-            window.location.href = "/hr-dashboard";
+            navigate("/hr-dashboard");
             break;
           case "TRAINER":
-            window.location.href = "/trainer-dashboard";
+            navigate("/trainer-dashboard");
             break;
           default:
-            break;
+            navigate("/");
         }
-      }, 800);
-    } catch (error) {
+        return;
+      }
+
       setMessage("❌ Invalid Username or Password");
+    } catch (error) {
+      console.error(error);
+      setMessage("❌ Login Failed");
     }
-  };
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-700 via-blue-900 to-slate-900 flex items-center justify-center p-6">
