@@ -4,11 +4,11 @@ require("dotenv").config();
 
 const app = express();
 const cors = require("cors");
-//const employeeRoutes = require("./routes/employee.routes");
+const employeeRoutes = require("./routes/employee.routes");
 
-//app.use("/api/employee", employeeRoutes);
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+app.use("/api/employee", employeeRoutes);
 
 const pool = new Pool({
     user: process.env.DB_USER,

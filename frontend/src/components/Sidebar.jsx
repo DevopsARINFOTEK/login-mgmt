@@ -18,37 +18,37 @@ const menuItems = [
   {
     title: "Dashboard",
     icon: <FaHome />,
-    path: "../admin",
+    path: "/admin",
   },
   {
     title: "Invoice Management",
     icon: <FaUsers />,
-    path: "../admin/invoice",
+    path: "/admin/invoice",
   },
   {
     title: "Pay/Receipt Management",
     icon: <FaCalendarCheck />,
-    path: "../admin/payment",
+    path: "/admin/payment",
   },
   {
     title: "Course Management",
     icon: <FaClipboardList />,
-    path: "../admin/course",
+    path: "/admin/course",
   },
   {
     title: "Student Management",
     icon: <FaMoneyBillWave />,
-    path: "../admin/student",
+    path: "/admin/student",
   },
   {
     title: "Intern Management",
     icon: <FaChartBar />,
-    path: "../admin/intern",
+    path: "/admin/intern",
   },
   {
     title: "Employee Management",
     icon: <FaUser />,
-    path: "../admin/employees",
+    path: "/admin/employees",
   },
 ]; 
 

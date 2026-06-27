@@ -7,11 +7,12 @@ import HomePage from "./components/Homepage";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLayout from "./components/AdminLayout";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
+import EmployeeManagement from "./pages/EmployeeManagement";
+import EmployeeLayout from "./components/EmployeeLayout";
 import InternDashboard from "./pages/InternDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
-import AdminLayout from "./components/AdminLayout";
-import EmployeeLayout from "./components/EmployeeLayout";
 import InternLayout from "./components/InternLayout";
 import StudentLayout from "./components/StudentLayout";
 import InvoiceManagement from "./pages/InvoiceManagement";
@@ -95,6 +96,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/employees" element={<EmployeeManagement />} />
               <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
               <Route path="/intern-dashboard" element={<InternDashboard />} />
               <Route path="/student-dashboard" element={<StudentDashboard />} />
@@ -110,6 +112,7 @@ function App() {
               <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/admin/*" element={<AdminLayout />} />
+              <Route path="/admin/employees" element={<EmployeeManagement />} />
               <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
               <Route path="/employee/*" element={<EmployeeLayout />} />
               <Route path="/intern-dashboard" element={<InternDashboard />} />

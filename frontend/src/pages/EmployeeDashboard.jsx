@@ -1,5 +1,15 @@
 import EmployeeLayout from "../components/EmployeeLayout";
-
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 export default function EmployeeDashboard() {
   const attendanceData = [
@@ -58,6 +68,14 @@ export default function EmployeeDashboard() {
           </h2>
 
           <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={attendanceData}>
+                <XAxis dataKey="month" />
+                <YAxis domain={[80, 100]} />
+                <Tooltip />
+                <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
